@@ -1,3 +1,5 @@
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -6,21 +8,24 @@ import org.junit.Test;
 
 public class ProtocolServiceTest {
 
-    private int getCommand(int command, boolean setBomb) {
-        int x = command;
-        if (setBomb) {
-            x = x | 0b100000000;
-        }
-        return x;
+    private ProtocolService protocolService;
+
+    @Before
+    public void setUp() {
+        this.protocolService = new ProtocolService(null);
     }
 
     @Test
-    public void testSendMessage() {
-        int command = 1;
-        boolean setBomb = true;
+    public void testSendMessage3() {
+        for (int i = 0; i <= 4; i++) {
+            int x = protocolService.getCommand(i, true);
+            Assert.assertEquals(x, 256 + i);
+        }
 
-        int x = getCommand(command, setBomb);
-        System.out.println(x);
+        for (int i = 0; i <= 4; i++) {
+            int x = protocolService.getCommand(i, false);
+            Assert.assertEquals(x, i);
+        }
     }
 
 }

@@ -66,4 +66,13 @@ public class ProtocolService {
         sendMessage(move, x);
     }
 
+
+    public int getCommand(int command, boolean setBomb) {
+        int x = command;
+        if (setBomb) {
+            x = x | 0b100000000;
+        }
+        return x;
+    }
+
 }
