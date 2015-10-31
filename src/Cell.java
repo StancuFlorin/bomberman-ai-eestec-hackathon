@@ -19,11 +19,11 @@ public class Cell {
         bombTimeLeft = (int)data[3];
     }
 
-    public boolean isMyLocation(int myID) {
+    public boolean isMyLocation() {
         boolean result = false;
 
         for(Integer player : players) {
-            if(player == myID) {
+            if(player == Information.ID) {
                 result = true;
                 break;
             }
