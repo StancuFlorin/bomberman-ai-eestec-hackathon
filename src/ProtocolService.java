@@ -1,4 +1,3 @@
-import javax.sound.midi.MidiDevice;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -11,27 +10,30 @@ import java.nio.channels.SocketChannel;
 public class ProtocolService {
 
     private SocketChannel socketChannel;
-    private static final int MAX_SIZE = (5 + 32 * 32) * 4;
 
     public ProtocolService(SocketChannel socketChannel) {
         this.socketChannel = socketChannel;
     }
 
     public void readID() throws IOException {
+        System.out.println("readID()");
+
         ByteBuffer byteBuffer = ByteBuffer.allocate(4);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
-        while (byteBuffer.hasRemaining() && (socketChannel.read(byteBuffer) > 0)) {}
-
+        while (byteBuffer.hasRemaining() && (socketChannel.read(byteBuffer)) > 0) {}
         byteBuffer.flip();
+
         Information.ID = byteBuffer.getInt();
     }
 
     public void readMessage() throws IOException {
-        ByteBuffer byteBuffer = ByteBuffer.allocate(MAX_SIZE);
+        System.out.println("readMessage()");
+
+        ByteBuffer byteBuffer = ByteBuffer.allocate(5 * 4);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
-        while (byteBuffer.hasRemaining() && (socketChannel.read(byteBuffer) > 0)) {}
+        while (byteBuffer.hasRemaining() && (socketChannel.read(byteBuffer)) > 0) {}
         byteBuffer.flip();
 
         Information.CURRENT_MOVE = byteBuffer.getInt();
@@ -46,15 +48,21 @@ public class ProtocolService {
         System.out.println("N = " + Information.N);
         System.out.println("M = " + Information.M);
 
-        createBoard(byteBuffer);
+        createBoard();
     }
 
-    private void createBoard(ByteBuffer buffer) {
+    private void createBoard() throws IOException {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(Information.N * Information.M * 4);
+        byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+
+        while (byteBuffer.hasRemaining() && (socketChannel.read(byteBuffer)) > 0) {}
+        byteBuffer.flip();
+
         Information.BOARD = new Cell[Information.N][Information.M];
 
         for(int n = 0; n < Information.N; n++) {
             for(int m = 0; m < Information.M; m++) {
-                byte[] bytes = {buffer.get(), buffer.get(), buffer.get(), buffer.get()};
+                byte[] bytes = {byteBuffer.get(), byteBuffer.get(), byteBuffer.get(), byteBuffer.get()};
                 Information.BOARD[n][m] = new Cell(bytes);
 
                 if(Information.BOARD[n][m].isMyLocation()) {
