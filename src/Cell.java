@@ -20,16 +20,13 @@ public class Cell {
     }
 
     public boolean isMyLocation() {
-        boolean result = false;
-
         for(Integer player : players) {
             if(player == Information.ID) {
-                result = true;
-                break;
+                return true;
             }
         }
 
-        return result;
+        return false;
     }
 
     public List<Integer> getPlayers() {
