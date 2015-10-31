@@ -57,8 +57,12 @@ public class ProtocolService {
         socketChannel.write(byteBuffer);
     }
 
-    public void sendMessage(int move, int command, boolean setBomb) throws IOException {
+    private void sendMessage(int move, int command, boolean setBomb) throws IOException {
         sendMessage(move, getCommand(command, setBomb));
+    }
+
+    public void sendMessage(int move, Command command, boolean setBomb) {
+        sendMessage(move, command, setBomb);
     }
 
     public int getCommand(int command, boolean setBomb) {
