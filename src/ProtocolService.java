@@ -1,9 +1,6 @@
-import exception.ReadError;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.InvalidMarkException;
 import java.nio.channels.SocketChannel;
 
 /**
@@ -21,16 +18,13 @@ public class ProtocolService {
 
     public void readID() throws IOException {
         System.out.println("ID");
-        ByteBuffer byteBuffer = ByteBuffer.allocate(1);
+        ByteBuffer byteBuffer = ByteBuffer.allocate(4);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
-        int bytesRead = socketChannel.read(byteBuffer);
-        System.out.println("bytesRead = " + bytesRead);
-        if (bytesRead == -1) {
-            throw new ReadError("bytesRead == -1");
-        }
-        byte byteID = byteBuffer.get(0);
-        Information.ID = (int) byteID;
+        while (byteBuffer.hasRemaining() && (socketChannel.read(byteBuffer) > 0)) {}
+
+        byteBuffer.flip();
+        Information.ID = byteBuffer.getInt();
     }
 
     public void readHeader() throws IOException {
@@ -38,12 +32,12 @@ public class ProtocolService {
         ByteBuffer byteBuffer = ByteBuffer.allocate(MAX_SIZE);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
-        while (socketChannel.read(byteBuffer) > 0) {}
-        byteBuffer.rewind();
+        while (byteBuffer.hasRemaining() && (socketChannel.read(byteBuffer) > 0)) {}
+        byteBuffer.flip();
 
         Information.CURRENT_MOVE = byteBuffer.getInt();
         Information.AGGRESSIVE_MODE = byteBuffer.getInt();
-        Information.MAX_MOVE = byteBuffer.getInt();
+        Information.MAX_MOVES = byteBuffer.getInt();
         Information.N = byteBuffer.getInt();
         Information.M = byteBuffer.getInt();
     }
