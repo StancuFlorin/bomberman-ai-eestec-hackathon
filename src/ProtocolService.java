@@ -40,6 +40,12 @@ public class ProtocolService {
         Information.N = byteBuffer.getInt();
         Information.M = byteBuffer.getInt();
 
+        System.out.println("CURRENT_MOVE = " + Information.CURRENT_MOVE);
+        System.out.println("AGGRESSIVE_MODE = " + Information.AGGRESSIVE_MODE);
+        System.out.println("MAX_MOVES = " + Information.MAX_MOVES);
+        System.out.println("N = " + Information.N);
+        System.out.println("M = " + Information.M);
+
         createBoard(byteBuffer);
     }
 
@@ -51,7 +57,7 @@ public class ProtocolService {
                 byte[] bytes = {buffer.get(), buffer.get(), buffer.get(), buffer.get()};
                 Information.BOARD[n][m] = new Cell(bytes);
 
-                if(Information.BOARD[n][m].isMyLocation(Information.ID)) {
+                if(Information.BOARD[n][m].isMyLocation()) {
                     Information.X = n;
                     Information.Y = m;
                 }
