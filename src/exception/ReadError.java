@@ -5,4 +5,8 @@ package exception;
  */
 
 public class ReadError extends Error {
+
+    public ReadError(String message) {
+        super(message);
+    }
 }

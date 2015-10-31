@@ -31,7 +31,7 @@ public class ProtocolService {
         int bytesRead = socketChannel.read(byteBuffer);
         System.out.println("bytesRead = " + bytesRead);
         if (bytesRead == -1) {
-            throw new ReadError();
+            throw new ReadError("bytesRead == -1");
         }
         byte byteID = byteBuffer.get(0);
         Information.ID = (int) byteID;
