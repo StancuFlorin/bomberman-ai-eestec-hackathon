@@ -17,7 +17,6 @@ public class ProtocolService {
     }
 
     public void readID() throws IOException {
-        System.out.println("ID");
         ByteBuffer byteBuffer = ByteBuffer.allocate(4);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -28,7 +27,6 @@ public class ProtocolService {
     }
 
     public void readMessage() throws IOException {
-        System.out.println("HEADER");
         ByteBuffer byteBuffer = ByteBuffer.allocate(MAX_SIZE);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -67,8 +65,8 @@ public class ProtocolService {
         sendMessage(move, getCommand(command, setBomb));
     }
 
-    public void sendMessage(int move, Command command, boolean setBomb) {
-        sendMessage(move, command, setBomb);
+    public void sendMessage(int move, Command command, boolean setBomb) throws IOException {
+        sendMessage(move, command.ordinal(), setBomb);
     }
 
     public int getCommand(int command, boolean setBomb) {
