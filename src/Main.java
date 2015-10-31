@@ -16,18 +16,23 @@ public class Main {
         System.out.println("Connected!");
 
         ProtocolService protocolService = new ProtocolService(socketChannel);
-        int ID = protocolService.getID();
+
+        protocolService.readID();
+        System.out.println("ID = " + Information.ID);
+
+        /*
         int CURRENT_MOVE = protocolService.getNextInt();
         int AGGRESSIVE_MODE = protocolService.getNextInt();
         int MAX_MOVE = protocolService.getNextInt();
         int N = protocolService.getNextInt();
         int M = protocolService.getNextInt();
 
-        System.out.println("ID = " + ID);
+
         System.out.println("CURRENT_MOVE = " + CURRENT_MOVE);
         System.out.println("AGGRESSIVE_MODE = " + AGGRESSIVE_MODE);
         System.out.println("MAX_MOVE = " + MAX_MOVE);
         System.out.println("N = " + N);
         System.out.println("M = " + M);
+        */
     }
 }

@@ -1,3 +1,5 @@
+import exception.ReadError;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -21,7 +23,7 @@ public class ProtocolService {
         this.intByteBuffer.order(ByteOrder.LITTLE_ENDIAN);
     }
 
-    public int getID() throws IOException {
+    public void readID() throws IOException {
         System.out.println("ID");
         ByteBuffer byteBuffer = ByteBuffer.allocate(1);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -29,12 +31,10 @@ public class ProtocolService {
         int bytesRead = socketChannel.read(byteBuffer);
         System.out.println("bytesRead = " + bytesRead);
         if (bytesRead == -1) {
-            return -1;
+            throw new ReadError();
         }
         byte byteID = byteBuffer.get(0);
-        Integer ID = (int) byteID;
-        System.out.println("ID = " + ID);
-        return ID;
+        Information.ID = (int) byteID;
     }
 
     public int getNextInt() throws IOException {
