@@ -17,7 +17,6 @@ public class ProtocolService {
     }
 
     public void readID() throws IOException {
-        System.out.println("ID");
         ByteBuffer byteBuffer = ByteBuffer.allocate(4);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -28,7 +27,6 @@ public class ProtocolService {
     }
 
     public void readMessage() throws IOException {
-        System.out.println("HEADER");
         ByteBuffer byteBuffer = ByteBuffer.allocate(MAX_SIZE);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
