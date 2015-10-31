@@ -5,12 +5,10 @@ import java.util.List;
  * Created by Ionut on 10/31/2015.
  */
 public class Cell {
+
     private List<Integer> players = new ArrayList<>();
-
     private boolean isWall;
-
     private int flameTimeLeft;
-
     private int bombTimeLeft;
 
     public List<Integer> getPlayers() {
