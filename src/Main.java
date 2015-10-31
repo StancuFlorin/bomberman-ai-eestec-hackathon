@@ -27,19 +27,5 @@ public class Main {
         System.out.println("N = " + Information.N);
         System.out.println("M = " + Information.M);
 
-        /*
-        int CURRENT_MOVE = protocolService.getNextInt();
-        int AGGRESSIVE_MODE = protocolService.getNextInt();
-        int MAX_MOVES = protocolService.getNextInt();
-        int N = protocolService.getNextInt();
-        int M = protocolService.getNextInt();
-
-
-        System.out.println("CURRENT_MOVE = " + CURRENT_MOVE);
-        System.out.println("AGGRESSIVE_MODE = " + AGGRESSIVE_MODE);
-        System.out.println("MAX_MOVES = " + MAX_MOVES);
-        System.out.println("N = " + N);
-        System.out.println("M = " + M);
-        */
     }
 }
