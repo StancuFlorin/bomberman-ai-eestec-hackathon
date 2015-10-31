@@ -1,3 +1,4 @@
+import javax.sound.midi.MidiDevice;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -49,6 +50,11 @@ public class ProtocolService {
             for(int m = 0; m < Information.M; m++) {
                 byte[] bytes = {buffer.get(), buffer.get(), buffer.get(), buffer.get()};
                 Information.BOARD[n][m] = new Cell(bytes);
+
+                if(Information.BOARD[n][m].isMyLocation(Information.ID)) {
+                    Information.N = n;
+                    Information.M = m;
+                }
             }
         }
     }
