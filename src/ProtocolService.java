@@ -49,4 +49,21 @@ public class ProtocolService {
         // TODO: create board
     }
 
+    private void sendMessage(int move, int command) throws IOException {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(8);
+        byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+        byteBuffer.putInt(move);
+        byteBuffer.putInt(command);
+        socketChannel.write(byteBuffer);
+    }
+
+    public void sendMessage(int move, int command, boolean setBomb) throws IOException {
+        int x = command;
+        if (setBomb) {
+            x = x | 0b100000000;
+        }
+        System.out.println(x);
+        sendMessage(move, x);
+    }
+
 }

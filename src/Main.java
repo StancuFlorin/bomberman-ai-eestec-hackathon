@@ -27,5 +27,7 @@ public class Main {
         System.out.println("N = " + Information.N);
         System.out.println("M = " + Information.M);
 
+
+
     }
 }
