@@ -40,6 +40,13 @@ public class ProtocolService {
         Information.MAX_MOVES = byteBuffer.getInt();
         Information.N = byteBuffer.getInt();
         Information.M = byteBuffer.getInt();
+
+        createBoard(byteBuffer);
+    }
+
+    private void createBoard(ByteBuffer byteBuffer) {
+        Information.BOARD = new Cell[Information.N][Information.M];
+        // TODO: create board
     }
 
 }
