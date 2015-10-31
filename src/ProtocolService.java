@@ -46,7 +46,8 @@ public class ProtocolService {
 
     private void createBoard(ByteBuffer byteBuffer) {
         Information.BOARD = new Cell[Information.N][Information.M];
-        // TODO: create board
+
+
     }
 
     private void sendMessage(int move, int command) throws IOException {
