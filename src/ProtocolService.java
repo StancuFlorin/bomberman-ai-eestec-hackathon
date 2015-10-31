@@ -58,14 +58,8 @@ public class ProtocolService {
     }
 
     public void sendMessage(int move, int command, boolean setBomb) throws IOException {
-        int x = command;
-        if (setBomb) {
-            x = x | 0b100000000;
-        }
-        System.out.println(x);
-        sendMessage(move, x);
+        sendMessage(move, getCommand(command, setBomb));
     }
-
 
     public int getCommand(int command, boolean setBomb) {
         int x = command;
