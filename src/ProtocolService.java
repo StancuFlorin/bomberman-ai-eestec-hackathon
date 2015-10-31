@@ -40,6 +40,37 @@ public class ProtocolService {
         Information.MAX_MOVES = byteBuffer.getInt();
         Information.N = byteBuffer.getInt();
         Information.M = byteBuffer.getInt();
+
+        createBoard(byteBuffer);
+    }
+
+    private void createBoard(ByteBuffer byteBuffer) {
+        Information.BOARD = new Cell[Information.N][Information.M];
+        // TODO: create board
+    }
+
+    private void sendMessage(int move, int command) throws IOException {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(8);
+        byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+        byteBuffer.putInt(move);
+        byteBuffer.putInt(command);
+        socketChannel.write(byteBuffer);
+    }
+
+    private void sendMessage(int move, int command, boolean setBomb) throws IOException {
+        sendMessage(move, getCommand(command, setBomb));
+    }
+
+    public void sendMessage(int move, Command command, boolean setBomb) {
+        sendMessage(move, command, setBomb);
+    }
+
+    public int getCommand(int command, boolean setBomb) {
+        int x = command;
+        if (setBomb) {
+            x = x | 0b100000000;
+        }
+        return x;
     }
 
 }

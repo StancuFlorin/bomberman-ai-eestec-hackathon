@@ -11,4 +11,6 @@ public class Information {
     public static int N;
     public static int M;
 
+    public static Cell[][] BOARD;
+
 }
