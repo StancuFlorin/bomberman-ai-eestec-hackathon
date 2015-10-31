@@ -52,8 +52,8 @@ public class ProtocolService {
                 Information.BOARD[n][m] = new Cell(bytes);
 
                 if(Information.BOARD[n][m].isMyLocation(Information.ID)) {
-                    Information.N = n;
-                    Information.M = m;
+                    Information.X = n;
+                    Information.Y = m;
                 }
             }
         }
