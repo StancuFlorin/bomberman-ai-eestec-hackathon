@@ -62,8 +62,8 @@ public class ProtocolService {
         sendMessage(move, getCommand(command, setBomb));
     }
 
-    public void sendMessage(int move, Command command, boolean setBomb) {
-        sendMessage(move, command, setBomb);
+    public void sendMessage(int move, Command command, boolean setBomb) throws IOException {
+        sendMessage(move, command.ordinal(), setBomb);
     }
 
     public int getCommand(int command, boolean setBomb) {
