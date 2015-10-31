@@ -20,6 +20,13 @@ public class Main {
         protocolService.readID();
         System.out.println("ID = " + Information.ID);
 
+        protocolService.readHeader();
+        System.out.println("CURRENT_MOVE = " + Information.CURRENT_MOVE);
+        System.out.println("AGGRESSIVE_MODE = " + Information.AGGRESSIVE_MODE);
+        System.out.println("MAX_MOVE = " + Information.MAX_MOVE);
+        System.out.println("N = " + Information.N);
+        System.out.println("M = " + Information.M);
+
         /*
         int CURRENT_MOVE = protocolService.getNextInt();
         int AGGRESSIVE_MODE = protocolService.getNextInt();

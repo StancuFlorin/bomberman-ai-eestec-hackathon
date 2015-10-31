@@ -12,15 +12,11 @@ import java.nio.channels.SocketChannel;
 
 public class ProtocolService {
 
-    private static final int INT_SIZE = 4;
-    private ByteBuffer intByteBuffer;
-
     private SocketChannel socketChannel;
+    private static final int MAX_SIZE = (5 + 32 * 32) * 4;
 
     public ProtocolService(SocketChannel socketChannel) {
         this.socketChannel = socketChannel;
-        this.intByteBuffer = ByteBuffer.allocate(INT_SIZE);
-        this.intByteBuffer.order(ByteOrder.LITTLE_ENDIAN);
     }
 
     public void readID() throws IOException {
@@ -37,16 +33,19 @@ public class ProtocolService {
         Information.ID = (int) byteID;
     }
 
-    public int getNextInt() throws IOException {
-        try {
-            intByteBuffer.reset();
-        } catch (InvalidMarkException exception) {}
-        int bytesRead = socketChannel.read(intByteBuffer);
-        System.out.println("bytesRead = " + bytesRead);
-        if (bytesRead == -1) {
-            return -1;
-        }
-        return intByteBuffer.getInt();
+    public void readHeader() throws IOException {
+        System.out.println("HEADER");
+        ByteBuffer byteBuffer = ByteBuffer.allocate(MAX_SIZE);
+        byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+
+        while (socketChannel.read(byteBuffer) > 0) {}
+        byteBuffer.rewind();
+
+        Information.CURRENT_MOVE = byteBuffer.getInt();
+        Information.AGGRESSIVE_MODE = byteBuffer.getInt();
+        Information.MAX_MOVE = byteBuffer.getInt();
+        Information.N = byteBuffer.getInt();
+        Information.M = byteBuffer.getInt();
     }
 
 }
