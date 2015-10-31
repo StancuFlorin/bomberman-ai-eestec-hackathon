@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.InvalidMarkException;
 import java.nio.channels.SocketChannel;
 
 /**
@@ -9,10 +10,15 @@ import java.nio.channels.SocketChannel;
 
 public class ProtocolService {
 
-    SocketChannel socketChannel;
+    private static final int INT_SIZE = 4;
+    private ByteBuffer intByteBuffer;
+
+    private SocketChannel socketChannel;
 
     public ProtocolService(SocketChannel socketChannel) {
         this.socketChannel = socketChannel;
+        this.intByteBuffer = ByteBuffer.allocate(INT_SIZE);
+        this.intByteBuffer.order(ByteOrder.LITTLE_ENDIAN);
     }
 
     public int getID() throws IOException {
@@ -29,6 +35,18 @@ public class ProtocolService {
         Integer ID = (int) byteID;
         System.out.println("ID = " + ID);
         return ID;
+    }
+
+    public int getNextInt() throws IOException {
+        try {
+            intByteBuffer.reset();
+        } catch (InvalidMarkException exception) {}
+        int bytesRead = socketChannel.read(intByteBuffer);
+        System.out.println("bytesRead = " + bytesRead);
+        if (bytesRead == -1) {
+            return -1;
+        }
+        return intByteBuffer.getInt();
     }
 
 }
