@@ -19,7 +19,7 @@ public class ProtocolServiceTest {
     public void testGetCommand() {
         for (int i = 0; i <= 4; i++) {
             int x = protocolService.getCommand(i, true);
-            Assert.assertEquals(x, 256 + i);
+            Assert.assertEquals(x, (1 << 31) + i);
         }
 
         for (int i = 0; i <= 4; i++) {

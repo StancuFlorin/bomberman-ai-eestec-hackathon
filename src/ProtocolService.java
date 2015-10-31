@@ -92,7 +92,8 @@ public class ProtocolService {
     public int getCommand(int command, boolean setBomb) {
         int x = command;
         if (setBomb) {
-            x = x | 0b100000000;
+            int mask = 1 << 31;
+            x = x | mask;
         }
         return x;
     }
