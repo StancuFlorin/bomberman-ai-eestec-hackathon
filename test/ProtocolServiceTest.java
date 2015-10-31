@@ -16,7 +16,7 @@ public class ProtocolServiceTest {
     }
 
     @Test
-    public void testSendMessage3() {
+    public void testGetCommand() {
         for (int i = 0; i <= 4; i++) {
             int x = protocolService.getCommand(i, true);
             Assert.assertEquals(x, 256 + i);
