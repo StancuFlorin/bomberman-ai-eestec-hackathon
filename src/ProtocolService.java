@@ -44,10 +44,15 @@ public class ProtocolService {
         createBoard(byteBuffer);
     }
 
-    private void createBoard(ByteBuffer byteBuffer) {
+    private void createBoard(ByteBuffer buffer) {
         Information.BOARD = new Cell[Information.N][Information.M];
 
-
+        for(int n = 0; n < Information.N; n++) {
+            for(int m = 0; m < Information.M; m++) {
+                byte[] bytes = {buffer.get(), buffer.get(), buffer.get(), buffer.get()};
+                Information.BOARD[n][m] = new Cell(bytes);
+            }
+        }
     }
 
     private void sendMessage(int move, int command) throws IOException {
