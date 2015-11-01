@@ -4,7 +4,7 @@ import java.util.List;
 /**
  * Created by Ionut on 10/31/2015.
  */
-public class Cell {
+public class Cell implements Comparable<Cell> {
 
     /**
      * PLAYER_ID-urile jucatorilor care se afla in celula curenta.
@@ -217,5 +217,27 @@ public class Cell {
 
     public void setPrevSteps(int prevSteps) {
         this.prevSteps = prevSteps;
+    }
+
+    @Override
+	public boolean equals(Object obj) {
+    	Cell c = (Cell)obj;
+
+    	if (c.getX() == this.x && c.getY() == this.y) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+
+    @Override
+    public int compareTo(Cell cell2) {
+        if (cell2.getF() < this.f) {
+            return 1;
+        } else if (cell2.getF() > this.f) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }
