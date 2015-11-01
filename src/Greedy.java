@@ -41,7 +41,6 @@ public class Greedy {
             } else {
                 return neighbour.getSafeTimeLeft() + greedy(neighbour, depthLeft - 1);
             }
-
         }
 
         return 0;

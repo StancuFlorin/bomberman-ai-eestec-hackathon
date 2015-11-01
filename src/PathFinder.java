@@ -1,11 +1,12 @@
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by adinu on 11/1/15.
  */
 public class PathFinder {
+
+    //TODO: change this
+    public static boolean placeBomb;
 
     private static PathFinder instance = null;
 
@@ -29,13 +30,14 @@ public class PathFinder {
         return instance;
     }
 
-    public void prepareSearch() {
+    private void prepareSearch() {
         closedCells = new HashSet<>();
         openedCells = new PriorityQueue<>();
 
         openedCells.offer(Information.BOARD[Information.PLAYER_I][Information.PLAYER_J]);
         last = Information.BOARD[Information.PLAYER_I][Information.PLAYER_J];
         minTotalCost = Integer.MAX_VALUE;
+        placeBomb = false;
     }
 
     public void updateParams(Cell front, int currX, int currY) {
@@ -45,7 +47,7 @@ public class PathFinder {
 
         // new calculated numbers
         int gNew = gCurr + 1 +
-                Information.BOARD[currX][currY].getDangerLevel()  +
+                   Information.BOARD[currX][currY].getDangerLevel()  +
                    front.getPrevSteps() + 1;
         int hNew = --hCurr;
         int fNew = gNew + hNew;
@@ -74,6 +76,7 @@ public class PathFinder {
     }
 
     public Cell findPath() {
+        prepareSearch();
         int nbOfMoves = LOOKUPS_LIMIT;
 
         // used for rolling back a
@@ -125,18 +128,19 @@ public class PathFinder {
 
         //System.out.println("last at the end: " + last.getX() + " " + last.getY());
 
-        return nextCell();
+        return showNextCell();
     }
 
-    public Cell nextCell() {
+    private Cell showNextCell() {
         if (last.getParent() == null) {
-            return CellService.getPlayerCell();
+            return null;
         }
 
         Cell curr = last.getParent();
 
+        // too bad move, returning null..
         if (curr.getParent().getParent() == null) {
-            return curr;
+            return null;
         }
 
         while (curr.getParent() != null) {
@@ -147,7 +151,40 @@ public class PathFinder {
             curr = curr.getParent();
         }
 
-        return CellService.getPlayerCell();
+        return null;
+    }
+
+    public Cell nextMove() {
+        final Cell currentCell = CellService.getPlayerCell();
+        int cX = currentCell.getX();
+        int cY = currentCell.getY();
+
+        // 1st case: place a bomb in the current cell
+        Cell[][] temp = new Cell[Information.BOARD_N][Information.BOARD_M];
+        for (int i = 0; i < Information.BOARD_N; i++) {
+            for (int j = 0; j < Information.BOARD_M; j++) {
+                temp[i][j] = Information.BOARD[i][j];
+            }
+        }
+        CellService.populateNeighbourCellsWithSafeTimeLeft(Arrays.asList(currentCell));
+        Cell nextCell = findPath();
+        if (nextCell != null) {
+            placeBomb = true;
+            return nextCell;
+        } else {
+            for (int i = 0; i < Information.BOARD_N; i++) {
+                for (int j = 0; j < Information.BOARD_M; j++) {
+                    Information.BOARD[i][j] = temp[i][j];
+                }
+            }
+
+            nextCell = findPath();
+            if (nextCell != null) {
+                return nextCell;
+            } else {
+                return CellService.getPlayerCell();
+            }
+        }
     }
 
 }

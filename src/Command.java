@@ -10,7 +10,7 @@ public enum  Command {
     DOWN;
 
     /*
-    * generates command based on current position on the boarde and the position found by the algorithm
+    * generates command based on current position on the board and the position found by the algorithm
     */
     public static Command getCommand(Cell currentCell, Cell futureCell) {
 
@@ -32,4 +32,5 @@ public enum  Command {
 
         return NONE;
     }
+
 }

@@ -54,7 +54,7 @@ public class Cell implements Comparable<Cell> {
      */
 
     public boolean isFree() {
-        return !isWall && (flameTimeLeft == 0) && (bombTimeLeft == 0) && (players.isEmpty());
+        return !isWall && (flameTimeLeft == 0) && (bombTimeLeft == 0);
     }
 
     public Cell(byte[] data, int x, int y) {

@@ -22,7 +22,13 @@ public class Main {
             try {
                 protocolService.readHeader();
                 //protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getPlayerCommand(), true);
-                protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getGreedyCommand(), true);
+                Command c = PlayerService.getPlayerCommand();
+                if (PathFinder.placeBomb) {
+                    protocolService.sendMessage(Information.CURRENT_MOVE, c, true);
+                } else {
+                    protocolService.sendMessage(Information.CURRENT_MOVE, c, false);
+                }
+                //protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getGreedyCommand(), true);
             } catch (BufferUnderflowException e) {
                 //e.printStackTrace();
                 break;

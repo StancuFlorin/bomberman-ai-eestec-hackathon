@@ -12,10 +12,8 @@ public class CellService {
     }
 
     public static void populateNeighbourCellsWithSafeTimeLeft(List<Cell> cellsWithBombs) {
-        Information.almostSafeCells = new ArrayList<>();
         for (Cell cell : cellsWithBombs) {
             for (Cell neighbour : getNeighboursFromBombArea(cell)) {
-                Information.almostSafeCells.add(neighbour);
                 neighbour.setSafeTimeLeft(cell.getBombTimeLeft());
             }
         }
