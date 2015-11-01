@@ -23,7 +23,7 @@ public class PlayerService {
         pathFinder.prepareSearch(Information.BOARD, Information.PLAYER_I, Information.PLAYER_J);
 
         Cell currentCell = CellService.getPlayerCell();
-        Cell futureCell = pathFinder.buildPath(currentCell)[0];
+        Cell futureCell = pathFinder.find()[0];
 
         return Command.getCommand(currentCell, futureCell);
     }
