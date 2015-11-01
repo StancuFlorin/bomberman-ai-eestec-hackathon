@@ -17,9 +17,10 @@ public class Main {
         protocolService.readID();
         System.out.println("PLAYER_ID = " + Information.PLAYER_ID);
 
-        protocolService.readHeader();
-        protocolService.sendMessage(Information.CURRENT_MOVE, Command.NONE, false);
-        protocolService.readHeader();
+        while (true) {
+            protocolService.readHeader();
+            protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getRandomMove(), true);
+        }
     }
 
 }

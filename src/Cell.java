@@ -97,35 +97,35 @@ public class Cell {
         int data = (int)myByte;
 
         if((data & MASK_P0) == MASK_P0) {
-            players.add(0);
-        }
-
-        if((data & MASK_P1) == MASK_P1) {
             players.add(1);
         }
 
-        if((data & MASK_P2) == MASK_P2) {
+        if((data & MASK_P1) == MASK_P1) {
             players.add(2);
         }
 
-        if((data & MASK_P3) == MASK_P3) {
+        if((data & MASK_P2) == MASK_P2) {
             players.add(3);
         }
 
-        if((data & MASK_P4) == MASK_P4) {
+        if((data & MASK_P3) == MASK_P3) {
             players.add(4);
         }
 
-        if((data & MASK_P5) == MASK_P5) {
+        if((data & MASK_P4) == MASK_P4) {
             players.add(5);
         }
 
-        if((data & MASK_P6) == MASK_P6) {
+        if((data & MASK_P5) == MASK_P5) {
             players.add(6);
         }
 
-        if((data & MASK_P7) == MASK_P7) {
+        if((data & MASK_P6) == MASK_P6) {
             players.add(7);
+        }
+
+        if((data & MASK_P7) == MASK_P7) {
+            players.add(8);
         }
     }
 
@@ -134,7 +134,7 @@ public class Cell {
     }
 
     public void setIsWall(byte myByte) {
-        int data = (int) myByte;
+        int data = Math.abs(myByte);
 
         if((data & 128) == 128) {
             isWall = true;

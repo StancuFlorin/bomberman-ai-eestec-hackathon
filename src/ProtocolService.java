@@ -78,10 +78,12 @@ public class ProtocolService {
                 if(Information.BOARD[i][j].isMyLocation()) {
                     Information.PLAYER_I = i;
                     Information.PLAYER_J = j;
+                    DebugService.printPlayerPosition();
                 }
             }
         }
 
+        DebugService.printBoard();
         CelService.populateNeighbourCellsWithSafeTimeLeft(cellsWithBombs);
     }
 
