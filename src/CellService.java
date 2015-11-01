@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by StancuFlorin on 11/1/2015.
@@ -77,36 +75,18 @@ public class CellService {
         return x >= 0 && y >= 0 && x < Information.BOARD_N && y < Information.BOARD_M;
     }
 
-
-    public static boolean addBomb() {
-        Cell cell = CellService.getPlayerCell();
-        List<Cell> neighbours = getNeighboursFromBombArea(cell);
-        Set<Cell> neighboursSet = new HashSet<>();
-        for (Cell neighbour : neighbours) {
-            neighboursSet.add(neighbour);
-            List<Cell> subNeighbours = getNeighboursFromBombArea(cell);
-            for (Cell cell1 : subNeighbours) {
-                neighboursSet.add(cell1);
-            }
-        }
-
-        for (Cell neighbour : neighboursSet) {
-            if (neighbour.getBombTimeLeft() != 0 && neighbour.getBombTimeLeft() < 3) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static boolean isReadyToExplode(Cell cell) {
+    public static List<Command> isReadyToExplode(Cell cell) {
         int cX = cell.getX();
         int cY = cell.getY();
+
+        List<Command> indices = new ArrayList<>();
 
         boolean flag = false;
         if (isOnBoard(cX, cY - 1)) {
             if (Information.BOARD[cX][cY - 1].getBombTimeLeft() <= 2 &&
                     Information.BOARD[cX][cY - 1].getBombTimeLeft() != 0) {
                 flag = true;
+                indices.add(Command.LEFT);
             }
         }
 
@@ -114,6 +94,7 @@ public class CellService {
             if (Information.BOARD[cX][cY + 1].getBombTimeLeft() <= 2 &&
                     Information.BOARD[cX][cY + 1].getBombTimeLeft() != 0) {
                 flag = true;
+                indices.add(Command.RIGHT);
             }
         }
 
@@ -121,15 +102,17 @@ public class CellService {
             if (Information.BOARD[cX - 1][cY].getBombTimeLeft() <= 2 &&
                     Information.BOARD[cX - 1][cY].getBombTimeLeft() != 0) {
                 flag = true;
+                indices.add(Command.UP);
             }
         }
         if (isOnBoard(cX + 1, cY)) {
             if (Information.BOARD[cX + 1][cY].getBombTimeLeft() <= 2 &&
                     Information.BOARD[cX + 1][cY].getBombTimeLeft() != 0) {
                 flag = true;
+                indices.add(Command.DOWN);
             }
         }
 
-        return flag;
+        return indices;
     }
 }

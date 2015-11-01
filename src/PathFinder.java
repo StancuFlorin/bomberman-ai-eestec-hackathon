@@ -16,6 +16,8 @@ public class PathFinder {
 
     private Cell last;
 
+    private List<Command> cmds;
+
     private int minTotalCost = Integer.MAX_VALUE;
 
     private static final int LOOKUPS_LIMIT = 5;
@@ -40,7 +42,7 @@ public class PathFinder {
         placeBomb = false;
     }
 
-    public void updateParams(Cell front, int currX, int currY) {
+    public void updateParams(Cell front, int currX, int currY, int increase) {
         // parent numbers
         int gCurr = front.getArrivalCost();
         int hCurr = front.getHeuristicCost();
@@ -49,6 +51,9 @@ public class PathFinder {
         int gNew = gCurr + 1 +
                    Information.BOARD[currX][currY].getDangerLevel()  +
                    front.getPrevSteps() + 1;
+        if (increase != 0) {
+            gNew += increase;
+        }
         int hNew = --hCurr;
         int fNew = gNew + hNew;
 
@@ -79,11 +84,16 @@ public class PathFinder {
         prepareSearch();
         int nbOfMoves = LOOKUPS_LIMIT;
 
+        boolean flag = false;
         // used for rolling back a
         while ((nbOfMoves >= 0) && (!openedCells.isEmpty())) {
             // get the front of the p queue
             Cell front = openedCells.remove();
             closedCells.add(front);
+
+            if (cmds.size() >= 1 && front == CellService.getPlayerCell()) {
+                flag = true;
+            }
 
             // check adjacent cells
             int currX = front.getX();
@@ -97,28 +107,53 @@ public class PathFinder {
                 // check the cell again for obstacles
                 if (Information.BOARD[currX][prevY].isFree()) {
                     //System.out.println("checked for availability " + currX + ", " + prevY);
-                    updateParams(front, currX, prevY);
+                    if (flag) {
+                        if (cmds.contains(Command.LEFT)) {
+                            updateParams(front, currX, prevY, 100);
+                        }
+                    } else {
+                        updateParams(front, currX, prevY, 0);
+                    }
+
                 }
             }
 
             if (!closedCells.contains(Information.BOARD[currX][nextY])) {
                 if (Information.BOARD[currX][nextY].isFree()) {
                     //System.out.println("checked for availability " + currX + ", " + nextY);
-                    updateParams(front, currX, nextY);
+                    if (flag) {
+                        if (cmds.contains(Command.RIGHT)) {
+                            updateParams(front, currX, nextY, 100);
+                        }
+                    } else {
+                        updateParams(front, currX, nextY, 0);
+                    }
                 }
             }
 
             if (!closedCells.contains(Information.BOARD[prevX][currY])) {
                 if (Information.BOARD[prevX][currY].isFree()) {
                     //System.out.println("checked for availability " + prevX + ", " + currY);
-                    updateParams(front, prevX, currY);
+                    if (flag) {
+                        if (cmds.contains(Command.UP)) {
+                            updateParams(front, prevX, currY, 100);
+                        }
+                    } else {
+                        updateParams(front, prevX, currY, 0);
+                    }
                 }
             }
 
             if (!closedCells.contains(Information.BOARD[nextX][currY])) {
                 if (Information.BOARD[nextX][currY].isFree()) {
                     //System.out.println("checked for availability " + nextX + ", " + currY);
-                    updateParams(front, nextX, currY);
+                    if (flag) {
+                        if (cmds.contains(Command.DOWN)) {
+                            updateParams(front, nextX, currY, 100);
+                        }
+                    } else {
+                        updateParams(front, nextX, currY, 0);
+                    }
                 }
             }
 
@@ -169,12 +204,14 @@ public class PathFinder {
 
         currentCell.setBombTimeLeft(10);
         CellService.populateNeighbourCellsWithSafeTimeLeft(Arrays.asList(currentCell));
+
+        cmds = CellService.isReadyToExplode(currentCell);
+        if (cmds.size() == 0) {
+            placeBomb = true;
+        }
         Cell nextCell = findPath();
         if (nextCell != null) {
             // check sth to be checked
-            if (!CellService.isReadyToExplode(currentCell)) {
-                placeBomb = true;
-            }
             return nextCell;
         } else {
             for (int i = 0; i < Information.BOARD_N; i++) {
