@@ -17,6 +17,20 @@ public class CellService {
 
     public static List<Cell> getFreeNeighbours(Cell cell) {
         List<Cell> neighbours = new ArrayList<>();
+
+        int x = cell.getX();
+        int y = cell.getY();
+
+        for(int i = -1; i < 2; i++) {
+            for(int j = -1; j < 2; j++) {
+                if(i != 0 && j != 0) {
+                    if(isOnBoard(x+i, y+i) && Information.BOARD[x+i][y+j].isFree()) {
+                        neighbours.add(Information.BOARD[x+i][y+i]);
+                    }
+                }
+            }
+        }
+
         return neighbours;
     }
 
