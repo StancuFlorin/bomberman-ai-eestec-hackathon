@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.BufferUnderflowException;
 import java.nio.channels.SocketChannel;
 
 public class Main {
@@ -21,12 +22,13 @@ public class Main {
             try {
                 protocolService.readHeader();
                 protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getPlayerCommand(), true);
-            } catch (IOException e) {
+            } catch (BufferUnderflowException e) {
                 e.printStackTrace();
                 break;
             }
         }
 
+        System.out.println("DONE!");
         socketChannel.close();
     }
 

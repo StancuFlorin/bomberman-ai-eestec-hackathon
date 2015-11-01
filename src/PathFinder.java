@@ -30,18 +30,12 @@ public class PathFinder {
     }
 
     public void prepareSearch() {
-        if (openedCells != null) {
-            while (!openedCells.isEmpty()) {
-                openedCells.remove();
-            }
-        }
+        closedCells = new HashSet<>();
         openedCells = new PriorityQueue<>();
+
         openedCells.offer(Information.BOARD[Information.PLAYER_I][Information.PLAYER_J]);
         last = Information.BOARD[Information.PLAYER_I][Information.PLAYER_J];
-        if (closedCells != null) {
-            closedCells.clear();
-        }
-        closedCells = new HashSet<>();
+        minTotalCost = Integer.MAX_VALUE;
     }
 
     public void updateParams(Cell front, int currX, int currY) {
@@ -73,6 +67,7 @@ public class PathFinder {
             }
 
             if (prevG == 0) {
+                System.out.println("offer = " + currX + " - " + currY);
                 openedCells.offer(Information.BOARD[currX][currY]);
             }
         }
@@ -99,7 +94,7 @@ public class PathFinder {
                 // check the cell again for obstacles
                 if (Information.BOARD[currX][prevY].isFree()) {
                     //System.out.println("checked for availability " + currX + ", " + prevY);
-                    updateParams(front, currX, currY);
+                    updateParams(front, currX, prevY);
                 }
             }
 
@@ -124,27 +119,28 @@ public class PathFinder {
                 }
             }
 
+            System.out.println("nbOfMoves = " + nbOfMoves);
             nbOfMoves--;
         }
 
-        //System.out.println("last at the end: " + last.getX() + " " + last.getY());
+        System.out.println("last at the end: " + last.getX() + " " + last.getY());
 
         return nextCell();
     }
 
     public Cell nextCell() {
-        Cell curr = last.getParent();
-
-        if (curr.getParent() == null) {
+        if (last.getParent() == null) {
             return CellService.getPlayerCell();
         }
+
+        Cell curr = last.getParent();
 
         if (curr.getParent().getParent() == null) {
             return curr;
         }
 
         while (curr.getParent() != null) {
-            //System.out.println(curr.getX() + " " + curr.getY());
+            System.out.println(curr.getX() + " " + curr.getY());
             if (curr.getParent().getParent().getParent() == null) {
                 return curr.getParent();
             }

@@ -23,9 +23,12 @@ public class PlayerService {
         pathFinder.prepareSearch();
 
         Cell currentCell = CellService.getPlayerCell();
-        Cell futureCell = pathFinder.nextCell();
+        Cell futureCell = pathFinder.findPath();
 
-        return Command.getCommand(currentCell, futureCell);
+        System.out.println("after findPath()");
+        Command command = Command.getCommand(currentCell, futureCell);
+        System.out.println("Command = " + command);
+        return command;
     }
 
     public static List<Command> getFreeMoves() {

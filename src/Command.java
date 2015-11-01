@@ -14,11 +14,11 @@ public enum  Command {
     */
     public static Command getCommand(Cell currentCell, Cell futureCell) {
 
-        if (futureCell.getX() > currentCell.getX()) { // UP
+        if (futureCell.getX() < currentCell.getX()) { // UP
             return UP;
         }
 
-        if (futureCell.getX() < currentCell.getX()) { // DOWN
+        if (futureCell.getX() > currentCell.getX()) { // DOWN
             return DOWN;
         }
 
