@@ -130,7 +130,7 @@ public class PathFinder {
             nbOfMoves--;
         }
 
-        System.out.println("last at the end: " + last.getX() + " " + last.getY());
+        //System.out.println("last at the end: " + last.getX() + " " + last.getY());
 
         return buildPath(last);
     }
