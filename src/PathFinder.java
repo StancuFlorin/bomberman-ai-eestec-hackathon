@@ -9,8 +9,6 @@ public class PathFinder {
 
     private static PathFinder instance = null;
 
-    private Cell[][] board;
-
     private PriorityQueue<Cell> openedCells;
 
     private Set<Cell> closedCells;
@@ -31,16 +29,15 @@ public class PathFinder {
         return instance;
     }
 
-    public void prepareSearch(Cell[][] board, int sX, int sY) {
-        this.board = board;
+    public void prepareSearch() {
         if (openedCells != null) {
             while (!openedCells.isEmpty()) {
                 openedCells.remove();
             }
         }
         openedCells = new PriorityQueue<>();
-        openedCells.offer(board[sX][sY]);
-        last = board[sX][sY];
+        openedCells.offer(Information.BOARD[Information.PLAYER_I][Information.PLAYER_J]);
+        last = Information.BOARD[Information.PLAYER_I][Information.PLAYER_J];
         if (closedCells != null) {
             closedCells.clear();
         }
@@ -54,34 +51,34 @@ public class PathFinder {
 
         // new calculated numbers
         int gNew = gCurr + 1 +
-                   board[currX][currY].getDangerLevel()  +
+                Information.BOARD[currX][currY].getDangerLevel()  +
                    front.getPrevSteps() + 1;
         int hNew = --hCurr;
         int fNew = gNew + hNew;
 
-        if (fNew < board[currX][currY].getTotalCost()) {
-            int prevG = board[currX][currY].getArrivalCost();
-            board[currX][currY].setTotalCost(fNew);
-            board[currX][currY].setHeuristicCost(hNew);
-            board[currX][currY].setArrivalCost(gNew);
-            board[currX][currY].setParent(front);
-            board[currX][currY].setPrevSteps(front.getPrevSteps() + 1);
+        if (fNew < Information.BOARD[currX][currY].getTotalCost()) {
+            int prevG = Information.BOARD[currX][currY].getArrivalCost();
+            Information.BOARD[currX][currY].setTotalCost(fNew);
+            Information.BOARD[currX][currY].setHeuristicCost(hNew);
+            Information.BOARD[currX][currY].setArrivalCost(gNew);
+            Information.BOARD[currX][currY].setParent(front);
+            Information.BOARD[currX][currY].setPrevSteps(front.getPrevSteps() + 1);
 
-            //System.out.println("updated cell nowww: " + board[currX][currY].getX() +
-            //        " " + board[currX][currY].getY());
+            //System.out.println("updated cell nowww: " + Information.BOARD[currX][currY].getX() +
+            //        " " + Information.BOARD[currX][currY].getY());
 
-            if (fNew < minTotalCost && board[currX][currY].getPrevSteps() > 2) {
+            if (fNew < minTotalCost && Information.BOARD[currX][currY].getPrevSteps() > 2) {
                 minTotalCost = fNew;
-                last = board[currX][currY];
+                last = Information.BOARD[currX][currY];
             }
 
             if (prevG == 0) {
-                openedCells.offer(board[currX][currY]);
+                openedCells.offer(Information.BOARD[currX][currY]);
             }
         }
     }
 
-    public Cell[] find() {
+    public Cell findPath() {
         int nbOfMoves = LOOKUPS_LIMIT;
 
         // used for rolling back a
@@ -98,30 +95,30 @@ public class PathFinder {
             int prevX = currX - 1;
             int prevY = currY - 1;
             // first let's take a look into the closed cells list
-            if (!closedCells.contains(board[currX][prevY])) {
+            if (!closedCells.contains(Information.BOARD[currX][prevY])) {
                 // check the cell again for obstacles
-                if (board[currX][prevY].isFree()) {
+                if (Information.BOARD[currX][prevY].isFree()) {
                     //System.out.println("checked for availability " + currX + ", " + prevY);
                     updateParams(front, currX, currY);
                 }
             }
 
-            if (!closedCells.contains(board[currX][nextY])) {
-                if (board[currX][nextY].isFree()) {
+            if (!closedCells.contains(Information.BOARD[currX][nextY])) {
+                if (Information.BOARD[currX][nextY].isFree()) {
                     //System.out.println("checked for availability " + currX + ", " + nextY);
                     updateParams(front, currX, nextY);
                 }
             }
 
-            if (!closedCells.contains(board[prevX][currY])) {
-                if (board[prevX][currY].isFree()) {
+            if (!closedCells.contains(Information.BOARD[prevX][currY])) {
+                if (Information.BOARD[prevX][currY].isFree()) {
                     //System.out.println("checked for availability " + prevX + ", " + currY);
                     updateParams(front, prevX, currY);
                 }
             }
 
-            if (!closedCells.contains(board[nextX][currY])) {
-                if (board[nextX][currY].isFree()) {
+            if (!closedCells.contains(Information.BOARD[nextX][currY])) {
+                if (Information.BOARD[nextX][currY].isFree()) {
                     //System.out.println("checked for availability " + nextX + ", " + currY);
                     updateParams(front, nextX, currY);
                 }
@@ -132,23 +129,25 @@ public class PathFinder {
 
         //System.out.println("last at the end: " + last.getX() + " " + last.getY());
 
-        return buildPath(last);
+        return nextCell();
     }
 
-    public Cell[] buildPath(Cell lastCell) {
-        Cell curr = lastCell.getParent();
+    public Cell nextCell() {
+        Cell curr = last.getParent();
 
-        Cell[] path = new Cell[2];
+        if (curr.getParent().getParent() == null) {
+            return curr;
+        }
+
         while (curr.getParent() != null) {
             //System.out.println(curr.getX() + " " + curr.getY());
             if (curr.getParent().getParent().getParent() == null) {
-                path[1] = curr; path[0] = curr.getParent();
-                break;
+                return curr.getParent();
             }
             curr = curr.getParent();
         }
 
-        return path;
+        return CellService.getPlayerCell();
     }
 
 }

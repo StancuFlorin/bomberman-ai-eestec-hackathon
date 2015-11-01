@@ -20,10 +20,10 @@ public class PlayerService {
 
     public static Command getPlayerCommand() {
         PathFinder pathFinder = PathFinder.getInstance();
-        pathFinder.prepareSearch(Information.BOARD, Information.PLAYER_I, Information.PLAYER_J);
+        pathFinder.prepareSearch();
 
         Cell currentCell = CellService.getPlayerCell();
-        Cell futureCell = pathFinder.find()[0];
+        Cell futureCell = pathFinder.nextCell();
 
         return Command.getCommand(currentCell, futureCell);
     }
