@@ -18,9 +18,16 @@ public class Main {
         System.out.println("PLAYER_ID = " + Information.PLAYER_ID);
 
         while (true) {
-            protocolService.readHeader();
-            protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getRandomMove(), true);
+            try {
+                protocolService.readHeader();
+                protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getRandomMove(), true);
+            } catch (IOException e) {
+                e.printStackTrace();
+                break;
+            }
         }
+
+        socketChannel.close();
     }
 
 }

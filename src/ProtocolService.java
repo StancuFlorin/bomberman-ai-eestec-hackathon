@@ -44,11 +44,7 @@ public class ProtocolService {
         Information.BOARD_N = byteBuffer.getInt();
         Information.BOARD_M = byteBuffer.getInt();
 
-        System.out.println("CURRENT_MOVE = " + Information.CURRENT_MOVE);
-        System.out.println("AGGRESSIVE_MODE = " + Information.AGGRESSIVE_MODE);
-        System.out.println("MAX_MOVES = " + Information.MAX_MOVES);
-        System.out.println("BOARD_N = " + Information.BOARD_N);
-        System.out.println("BOARD_M = " + Information.BOARD_M);
+        DebugService.printInformation();
 
         readBoard();
     }
@@ -93,7 +89,7 @@ public class ProtocolService {
         byteBuffer.putInt(move);
         byteBuffer.putInt(command);
         byteBuffer.flip();
-        socketChannel.write(byteBuffer);
+        while (byteBuffer.hasRemaining() && (socketChannel.write(byteBuffer)) > 0) {}
     }
 
     private void sendMessage(int move, int command, boolean setBomb) throws IOException {
