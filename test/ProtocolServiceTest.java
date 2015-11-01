@@ -28,4 +28,10 @@ public class ProtocolServiceTest {
         }
     }
 
+    @Test
+    public void testPlayers() {
+        int data = 1 << 7;
+        System.out.println((data & (1 << 7)) != 0);
+    }
+
 }

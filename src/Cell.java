@@ -84,48 +84,39 @@ public class Cell {
         this.players = players;
     }
 
-    public void setPlayers(byte myByte) {
-        final int MASK_P0 = 1;
-        final int MASK_P1 = 2;
-        final int MASK_P2 = 4;
-        final int MASK_P3 = 8;
-        final int MASK_P4 = 16;
-        final int MASK_P5 = 32;
-        final int MASK_P6 = 64;
-        final int MASK_P7 = 128;
+    public void setPlayers(byte data) {
+        int myByte = (int) data;
 
-        int data = (int)myByte;
-
-        if((data & MASK_P0) == MASK_P0) {
+        if((myByte & (1 << 0)) != 0) {
             players.add(1);
         }
 
-        if((data & MASK_P1) == MASK_P1) {
+        if((myByte & (1 << 1)) != 0) {
             players.add(2);
         }
 
-        if((data & MASK_P2) == MASK_P2) {
-            players.add(3);
-        }
-
-        if((data & MASK_P3) == MASK_P3) {
+        if((myByte & (1 << 2)) != 0) {
             players.add(4);
         }
 
-        if((data & MASK_P4) == MASK_P4) {
-            players.add(5);
-        }
-
-        if((data & MASK_P5) == MASK_P5) {
-            players.add(6);
-        }
-
-        if((data & MASK_P6) == MASK_P6) {
-            players.add(7);
-        }
-
-        if((data & MASK_P7) == MASK_P7) {
+        if((myByte & (1 << 3)) != 0) {
             players.add(8);
+        }
+
+        if((myByte & (1 << 4)) != 0) {
+            players.add(16);
+        }
+
+        if((myByte & (1 << 5)) != 0) {
+            players.add(32);
+        }
+
+        if((myByte & (1 << 6)) != 0) {
+            players.add(64);
+        }
+
+        if((myByte & (1 << 7)) != 0) {
+            players.add(128);
         }
     }
 
