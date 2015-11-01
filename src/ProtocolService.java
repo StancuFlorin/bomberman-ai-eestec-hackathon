@@ -41,30 +41,30 @@ public class ProtocolService {
         Information.CURRENT_MOVE = byteBuffer.getInt();
         Information.AGGRESSIVE_MODE = byteBuffer.getInt();
         Information.MAX_MOVES = byteBuffer.getInt();
-        Information.N = byteBuffer.getInt();
-        Information.M = byteBuffer.getInt();
+        Information.BOARD_N = byteBuffer.getInt();
+        Information.BOARD_M = byteBuffer.getInt();
 
         System.out.println("CURRENT_MOVE = " + Information.CURRENT_MOVE);
         System.out.println("AGGRESSIVE_MODE = " + Information.AGGRESSIVE_MODE);
         System.out.println("MAX_MOVES = " + Information.MAX_MOVES);
-        System.out.println("N = " + Information.N);
-        System.out.println("M = " + Information.M);
+        System.out.println("BOARD_N = " + Information.BOARD_N);
+        System.out.println("BOARD_M = " + Information.BOARD_M);
 
         createBoard();
     }
 
     private void createBoard() throws IOException {
-        ByteBuffer byteBuffer = ByteBuffer.allocate(Information.N * Information.M * 4);
+        ByteBuffer byteBuffer = ByteBuffer.allocate(Information.BOARD_N * Information.BOARD_M * 4);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
         while (byteBuffer.hasRemaining() && (socketChannel.read(byteBuffer)) > 0) {}
         byteBuffer.flip();
 
-        Information.BOARD = new Cell[Information.N][Information.M];
+        Information.BOARD = new Cell[Information.BOARD_N][Information.BOARD_M];
         List<Cell> cellsWithBombs = new ArrayList<>();
 
-        for(int n = 0; n < Information.N; n++) {
-            for(int m = 0; m < Information.M; m++) {
+        for(int n = 0; n < Information.BOARD_N; n++) {
+            for(int m = 0; m < Information.BOARD_M; m++) {
                 byte[] bytes = {byteBuffer.get(), byteBuffer.get(), byteBuffer.get(), byteBuffer.get()};
                 Cell cell = new Cell(bytes, n, m);
                 Information.BOARD[n][m] = cell;
@@ -74,8 +74,8 @@ public class ProtocolService {
                 }
 
                 if(Information.BOARD[n][m].isMyLocation()) {
-                    Information.I = n;
-                    Information.J = m;
+                    Information.PLAYER_I = n;
+                    Information.PLAYER_J = m;
                 }
             }
         }
