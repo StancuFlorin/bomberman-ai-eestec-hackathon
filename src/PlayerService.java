@@ -1,11 +1,22 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by StancuFlorin on 11/1/2015.
  */
 
 public class PlayerService {
+
+    public static Command getRandomMove() {
+        List<Command> moves = getFreeMoves();
+        if (moves.isEmpty()) {
+            return Command.NONE;
+        }
+        Random random = new Random();
+        int index = random.nextInt(moves.size());
+        return moves.get(index);
+    }
 
     public static List<Command> getFreeMoves() {
         List<Command> moves = new ArrayList<>();
