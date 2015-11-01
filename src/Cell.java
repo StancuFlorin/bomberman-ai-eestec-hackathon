@@ -57,13 +57,7 @@ public class Cell {
     }
 
     public boolean isMyLocation() {
-        for(Integer player : players) {
-            if(player == Information.ID) {
-                return true;
-            }
-        }
-
-        return false;
+        return players.contains(Information.ID);
     }
 
     public int getX() {

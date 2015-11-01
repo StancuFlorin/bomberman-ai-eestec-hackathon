@@ -60,9 +60,11 @@ public class ProtocolService {
         while (byteBuffer.hasRemaining() && (socketChannel.read(byteBuffer)) > 0) {}
         byteBuffer.flip();
 
+        // read board information
         Information.BOARD = new Cell[Information.BOARD_N][Information.BOARD_M];
         List<Cell> cellsWithBombs = new ArrayList<>();
 
+        //  create board
         for(int n = 0; n < Information.BOARD_N; n++) {
             for(int m = 0; m < Information.BOARD_M; m++) {
                 byte[] bytes = {byteBuffer.get(), byteBuffer.get(), byteBuffer.get(), byteBuffer.get()};
