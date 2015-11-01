@@ -41,7 +41,7 @@ public class PathFinder {
         openedCells = new PriorityQueue<>();
         openedCells.offer(board[sX][sY]);
         last = board[sX][sY];
-        if (!closedCells.isEmpty()) {
+        if (closedCells != null) {
             closedCells.clear();
         }
         closedCells = new HashSet<>();
