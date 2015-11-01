@@ -17,6 +17,20 @@ public class CellService {
 
     public static List<Cell> getFreeNeighbours(Cell cell) {
         List<Cell> neighbours = new ArrayList<>();
+
+        int x = cell.getX();
+        int y = cell.getY();
+
+        for(int i = -1; i < 2; i++) {
+            for(int j = -1; j < 2; j++) {
+                if(i != 0 && j != 0) {
+                    if(isOnBoard(x+i, y+i) && Information.BOARD[x+i][y+j].isFree()) {
+                        neighbours.add(Information.BOARD[x+i][y+i]);
+                    }
+                }
+            }
+        }
+
         return neighbours;
     }
 
@@ -26,21 +40,21 @@ public class CellService {
         int x = bombCell.getX();
         int y = bombCell.getY();
 
-        for(int i = 1; i < 6; i++) {
-            if(isOnBoard(x+1, y) && !Information.BOARD[x+1][y].isWall()) {
-                neighbours.add(Information.BOARD[x+1][y]);
+        for(int i = 1; i <= 6; i++) {
+            if(isOnBoard(x+i, y) && !Information.BOARD[x+i][y].isWall()) {
+                neighbours.add(Information.BOARD[x+i][y]);
             }
 
-            if(isOnBoard(x-1, y) && !Information.BOARD[x-1][y].isWall()) {
-                neighbours.add(Information.BOARD[x-1][y]);
+            if(isOnBoard(x-i, y) && !Information.BOARD[x-i][y].isWall()) {
+                neighbours.add(Information.BOARD[x-i][y]);
             }
 
-            if(isOnBoard(x, y+1) && !Information.BOARD[x][y+1].isWall()) {
-                neighbours.add(Information.BOARD[x][y+1]);
+            if(isOnBoard(x, y+i) && !Information.BOARD[x][y+i].isWall()) {
+                neighbours.add(Information.BOARD[x][y+i]);
             }
 
-            if(isOnBoard(x, y-1) && !Information.BOARD[x][y-1].isWall()) {
-                neighbours.add(Information.BOARD[x][y-1]);
+            if(isOnBoard(x, y-i) && !Information.BOARD[x][y-i].isWall()) {
+                neighbours.add(Information.BOARD[x][y-i]);
             }
         }
 
