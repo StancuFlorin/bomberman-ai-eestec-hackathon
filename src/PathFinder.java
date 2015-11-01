@@ -166,6 +166,8 @@ public class PathFinder {
                 temp[i][j] = Information.BOARD[i][j];
             }
         }
+
+        currentCell.setBombTimeLeft(10);
         CellService.populateNeighbourCellsWithSafeTimeLeft(Arrays.asList(currentCell));
         Cell nextCell = findPath();
         if (nextCell != null) {
