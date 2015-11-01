@@ -29,8 +29,8 @@ public class ProtocolService {
         Information.PLAYER_ID = byteBuffer.getInt();
     }
 
-    public void readMessage() throws IOException {
-        System.out.println("readMessage()");
+    public void readHeader() throws IOException {
+        System.out.println("readHeader()");
 
         ByteBuffer byteBuffer = ByteBuffer.allocate(5 * 4);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -50,10 +50,10 @@ public class ProtocolService {
         System.out.println("BOARD_N = " + Information.BOARD_N);
         System.out.println("BOARD_M = " + Information.BOARD_M);
 
-        createBoard();
+        readBoard();
     }
 
-    private void createBoard() throws IOException {
+    private void readBoard() throws IOException {
         ByteBuffer byteBuffer = ByteBuffer.allocate(Information.BOARD_N * Information.BOARD_M * 4);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
