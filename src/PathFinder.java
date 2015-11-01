@@ -135,6 +135,10 @@ public class PathFinder {
     public Cell nextCell() {
         Cell curr = last.getParent();
 
+        if (curr.getParent() == null) {
+            return CellService.getPlayerCell();
+        }
+
         if (curr.getParent().getParent() == null) {
             return curr;
         }
