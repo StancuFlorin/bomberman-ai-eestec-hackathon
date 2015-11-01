@@ -15,7 +15,7 @@ public class Main {
         ProtocolService protocolService = new ProtocolService(socketChannel);
 
         protocolService.readID();
-        System.out.println("ID = " + Information.ID);
+        System.out.println("PLAYER_ID = " + Information.PLAYER_ID);
 
         protocolService.readMessage();
         protocolService.sendMessage(Information.CURRENT_MOVE, Command.NONE, false);

@@ -7,7 +7,7 @@ import java.util.List;
 public class Cell {
 
     /**
-     * ID-urile jucatorilor care se afla in celula curenta.
+     * PLAYER_ID-urile jucatorilor care se afla in celula curenta.
      */
     private List<Integer> players = new ArrayList<>();
 
@@ -57,7 +57,7 @@ public class Cell {
     }
 
     public boolean isMyLocation() {
-        return players.contains(Information.ID);
+        return players.contains(Information.PLAYER_ID);
     }
 
     public int getX() {

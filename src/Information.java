@@ -4,7 +4,6 @@
 
 public class Information {
 
-    public static int ID;
     public static int CURRENT_MOVE;
     public static int AGGRESSIVE_MODE;
     public static int MAX_MOVES;
@@ -13,6 +12,7 @@ public class Information {
     public static int BOARD_M;
     public static Cell[][] BOARD;
 
+    public static int PLAYER_ID;
     public static int PLAYER_I;
     public static int PLAYER_J;
 }

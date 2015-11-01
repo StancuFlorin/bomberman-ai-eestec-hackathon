@@ -26,7 +26,7 @@ public class ProtocolService {
         while (byteBuffer.hasRemaining() && (socketChannel.read(byteBuffer)) > 0) {}
         byteBuffer.flip();
 
-        Information.ID = byteBuffer.getInt();
+        Information.PLAYER_ID = byteBuffer.getInt();
     }
 
     public void readMessage() throws IOException {
