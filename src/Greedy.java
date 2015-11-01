@@ -7,6 +7,7 @@ import java.util.List;
 public class Greedy {
 
     private Cell previousMe;
+    public static boolean ADD_BOMB = true;
 
     public Cell start() {
         Cell playerCell = CellService.getPlayerCell();
@@ -22,28 +23,29 @@ public class Greedy {
                 cell = neighbour;
             }
         }
+        System.out.println("bestScore = " + bestScore);
+        if (bestScore < 150) {
+            ADD_BOMB = false;
+        }
         return cell;
     }
 
     private int greedy(Cell cell, int depthLeft) {
         if (depthLeft == 0) {
-            return cell.getSafeTimeLeft();
+            return 0;
         }
 
+        int sum = 0;
         for (Cell neighbour : CellService.getFreeNeighbours(cell)) {
-            if (neighbour.equals(previousMe)) {
-                continue;
-            }
-
             previousMe = neighbour;
             if (neighbour.getSafeTimeLeft() == 0) {
-                return 100 + greedy(neighbour, depthLeft - 1);
+                sum += 120 + greedy(neighbour, depthLeft - 1);
             } else {
-                return neighbour.getSafeTimeLeft() + greedy(neighbour, depthLeft - 1);
+                sum += neighbour.getSafeTimeLeft() * 10 + greedy(neighbour, depthLeft - 1);
             }
         }
 
-        return 0;
+        return sum;
     }
 
 }
