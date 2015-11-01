@@ -10,13 +10,18 @@ public class Cell {
     private boolean isWall;
     private int flameTimeLeft;
     private int bombTimeLeft;
+    private int x;
+    private int y;
 
-    public Cell(byte[] data) {
+    public Cell(byte[] data, int x, int y) {
         setPlayers(data[0]);
         setIsWall(data[1]);
 
-        flameTimeLeft = (int)data[2];
-        bombTimeLeft = (int)data[3];
+        this.flameTimeLeft = (int)data[2];
+        this.bombTimeLeft = (int)data[3];
+
+        this.x = x;
+        this.y = y;
     }
 
     public boolean isMyLocation() {
@@ -27,6 +32,22 @@ public class Cell {
         }
 
         return false;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public List<Integer> getPlayers() {

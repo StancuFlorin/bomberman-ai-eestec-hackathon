@@ -63,7 +63,7 @@ public class ProtocolService {
         for(int n = 0; n < Information.N; n++) {
             for(int m = 0; m < Information.M; m++) {
                 byte[] bytes = {byteBuffer.get(), byteBuffer.get(), byteBuffer.get(), byteBuffer.get()};
-                Information.BOARD[n][m] = new Cell(bytes);
+                Information.BOARD[n][m] = new Cell(bytes, n, m);
 
                 if(Information.BOARD[n][m].isMyLocation()) {
                     Information.X = n;
