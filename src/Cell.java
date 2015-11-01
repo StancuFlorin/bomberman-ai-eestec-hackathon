@@ -232,9 +232,9 @@ public class Cell implements Comparable<Cell> {
 
     @Override
     public int compareTo(Cell cell2) {
-        if (cell2.getF() < this.f) {
+        if (cell2.getTotalCost() < this.totalCost) {
             return 1;
-        } else if (cell2.getF() > this.f) {
+        } else if (cell2.getTotalCost() > this.totalCost) {
             return -1;
         } else {
             return 0;
