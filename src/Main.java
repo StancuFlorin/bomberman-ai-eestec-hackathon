@@ -18,7 +18,7 @@ public class Main {
         System.out.println("ID = " + Information.ID);
 
         protocolService.readMessage();
-        protocolService.sendMessage(Information.CURRENT_MOVE, Command.NONE, true);
+        protocolService.sendMessage(Information.CURRENT_MOVE, Command.NONE, false);
         protocolService.readMessage();
     }
 

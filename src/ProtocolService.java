@@ -78,6 +78,7 @@ public class ProtocolService {
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
         byteBuffer.putInt(move);
         byteBuffer.putInt(command);
+        byteBuffer.flip();
         socketChannel.write(byteBuffer);
     }
 
@@ -86,6 +87,7 @@ public class ProtocolService {
     }
 
     public void sendMessage(int move, Command command, boolean setBomb) throws IOException {
+        System.out.println("sendMessage()");
         sendMessage(move, command.ordinal(), setBomb);
     }
 
