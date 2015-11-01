@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by StancuFlorin on 10/31/2015.
@@ -10,9 +12,11 @@ import java.nio.channels.SocketChannel;
 public class ProtocolService {
 
     private SocketChannel socketChannel;
+    private CelService celService;
 
     public ProtocolService(SocketChannel socketChannel) {
         this.socketChannel = socketChannel;
+        this.celService = new CelService();
     }
 
     public void readID() throws IOException {
@@ -59,11 +63,17 @@ public class ProtocolService {
         byteBuffer.flip();
 
         Information.BOARD = new Cell[Information.N][Information.M];
+        List<Cell> cellsWithBombs = new ArrayList<>();
 
         for(int n = 0; n < Information.N; n++) {
             for(int m = 0; m < Information.M; m++) {
                 byte[] bytes = {byteBuffer.get(), byteBuffer.get(), byteBuffer.get(), byteBuffer.get()};
-                Information.BOARD[n][m] = new Cell(bytes, n, m);
+                Cell cell = new Cell(bytes, n, m);
+                Information.BOARD[n][m] = cell;
+
+                if (cell.getBombTimeLeft() != 0) {
+                    cellsWithBombs.add(cell);
+                }
 
                 if(Information.BOARD[n][m].isMyLocation()) {
                     Information.X = n;
@@ -71,6 +81,8 @@ public class ProtocolService {
                 }
             }
         }
+
+        celService.populateNeighbourCellsWithSafeTimeLeft(cellsWithBombs);
     }
 
     private void sendMessage(int move, int command) throws IOException {

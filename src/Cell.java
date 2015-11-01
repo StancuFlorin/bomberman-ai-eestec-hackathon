@@ -6,12 +6,44 @@ import java.util.List;
  */
 public class Cell {
 
+    /**
+     * ID-urile jucatorilor care se afla in celula curenta.
+     */
     private List<Integer> players = new ArrayList<>();
+
     private boolean isWall;
+
+    /**
+     * Cat timp mai e celula in flacari.
+     */
     private int flameTimeLeft;
+
+    /**
+     * Cat mai are bomba pana explodeaza.
+     */
     private int bombTimeLeft;
+
+    /**
+     * Pozitia in board a celulei.
+     */
     private int x;
     private int y;
+
+    /**
+     * Cat mai e pana cand un vecin explodeaza si ma afecteza si pe mine.
+     */
+
+    private int safeTimeLeft;
+
+    /**
+     * Daca in celula curenta nu se afla o bomba / flacari / zid.
+     * Daca nu exista niciun player in celula curenta.
+     * @return
+     */
+
+    public boolean isFree() {
+        return !isWall && (flameTimeLeft == 0) && (bombTimeLeft == 0) && (players.isEmpty());
+    }
 
     public Cell(byte[] data, int x, int y) {
         setPlayers(data[0]);
@@ -133,5 +165,13 @@ public class Cell {
 
     public void setBombTimeLeft(int bombTimeLeft) {
         this.bombTimeLeft = bombTimeLeft;
+    }
+
+    public int getSafeTimeLeft() {
+        return safeTimeLeft;
+    }
+
+    public void setSafeTimeLeft(int safeTimeLeft) {
+        this.safeTimeLeft = Math.min(this.safeTimeLeft, safeTimeLeft);
     }
 }
