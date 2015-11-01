@@ -13,6 +13,6 @@ public class Information {
 
     public static Cell[][] BOARD;
 
-    public static int X;
-    public static int Y;
+    public static int I;
+    public static int J;
 }

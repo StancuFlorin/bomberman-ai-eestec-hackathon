@@ -12,11 +12,9 @@ import java.util.List;
 public class ProtocolService {
 
     private SocketChannel socketChannel;
-    private CelService celService;
 
     public ProtocolService(SocketChannel socketChannel) {
         this.socketChannel = socketChannel;
-        this.celService = new CelService();
     }
 
     public void readID() throws IOException {
@@ -76,13 +74,13 @@ public class ProtocolService {
                 }
 
                 if(Information.BOARD[n][m].isMyLocation()) {
-                    Information.X = n;
-                    Information.Y = m;
+                    Information.I = n;
+                    Information.J = m;
                 }
             }
         }
 
-        celService.populateNeighbourCellsWithSafeTimeLeft(cellsWithBombs);
+        CelService.populateNeighbourCellsWithSafeTimeLeft(cellsWithBombs);
     }
 
     private void sendMessage(int move, int command) throws IOException {
