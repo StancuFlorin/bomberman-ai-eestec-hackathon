@@ -65,19 +65,19 @@ public class ProtocolService {
         List<Cell> cellsWithBombs = new ArrayList<>();
 
         //  create board
-        for(int n = 0; n < Information.BOARD_N; n++) {
-            for(int m = 0; m < Information.BOARD_M; m++) {
+        for(int i = 0; i < Information.BOARD_N; i++) {
+            for(int j = 0; j < Information.BOARD_M; j++) {
                 byte[] bytes = {byteBuffer.get(), byteBuffer.get(), byteBuffer.get(), byteBuffer.get()};
-                Cell cell = new Cell(bytes, n, m);
-                Information.BOARD[n][m] = cell;
+                Cell cell = new Cell(bytes, i, j);
+                Information.BOARD[i][j] = cell;
 
                 if (cell.getBombTimeLeft() != 0) {
                     cellsWithBombs.add(cell);
                 }
 
-                if(Information.BOARD[n][m].isMyLocation()) {
-                    Information.PLAYER_I = n;
-                    Information.PLAYER_J = m;
+                if(Information.BOARD[i][j].isMyLocation()) {
+                    Information.PLAYER_I = i;
+                    Information.PLAYER_J = j;
                 }
             }
         }
