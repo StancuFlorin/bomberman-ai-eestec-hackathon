@@ -8,6 +8,8 @@ public class Main {
 /*    private static final String IP = "192.168.56.101";
     private static final Integer PORT = 10000;*/
 
+    private static int rounds = 30;
+
     public static void main(String[] args) throws IOException {
 
         String IP = args[0];
@@ -28,13 +30,18 @@ public class Main {
         while (true) {
             try {
                 protocolService.readHeader();
+                rounds--;
                 //protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getPlayerCommand(), true);
 
                 if (STRATEGY == 0) {
                     Command c = PlayerService.getPlayerCommand();
-                    System.out.println(Information.BOMB);
-                    protocolService.sendMessage(Information.CURRENT_MOVE, c, Information.BOMB);
-                    Information.BOMB = false;
+                    //System.out.println(Information.BOMB);
+                    if (rounds < 0) {
+                        protocolService.sendMessage(Information.CURRENT_MOVE, c, Information.BOMB);
+                        Information.BOMB = false;
+                    } else {
+                        protocolService.sendMessage(Information.CURRENT_MOVE, c, false);
+                    }
                 } else {
                     protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getGreedyCommand(), true);
                 }
