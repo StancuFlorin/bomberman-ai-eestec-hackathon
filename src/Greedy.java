@@ -4,11 +4,11 @@ import java.util.List;
  * Created by StancuFlorin on 11/1/2015.
  */
 
-public class Gready {
+public class Greedy {
 
     private Cell previousMe;
 
-    public Cell startNegamax() {
+    public Cell start() {
         Cell playerCell = CellService.getPlayerCell();
         this.previousMe = playerCell;
         List<Cell> neighbours = CellService.getFreeNeighbours(playerCell);
@@ -27,11 +27,21 @@ public class Gready {
 
     private int greedy(Cell cell, int depthLeft) {
         if (depthLeft == 0) {
-            return cell.getBombTimeLeft();
+            return cell.getSafeTimeLeft();
         }
 
         for (Cell neighbour : CellService.getFreeNeighbours(cell)) {
-            return neighbour.getBombTimeLeft() + greedy(neighbour, depthLeft - 1);
+            if (neighbour.equals(previousMe)) {
+                continue;
+            }
+
+            previousMe = neighbour;
+            if (neighbour.getSafeTimeLeft() == 0) {
+                return 100 + greedy(neighbour, depthLeft - 1);
+            } else {
+                return neighbour.getSafeTimeLeft() + greedy(neighbour, depthLeft - 1);
+            }
+
         }
 
         return 0;

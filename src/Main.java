@@ -22,7 +22,7 @@ public class Main {
             try {
                 protocolService.readHeader();
                 //protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getPlayerCommand(), true);
-                protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getNegamaxCommand(), Negamax.addBomb());
+                protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getGreedyCommand(), true);
             } catch (BufferUnderflowException e) {
                 //e.printStackTrace();
                 break;

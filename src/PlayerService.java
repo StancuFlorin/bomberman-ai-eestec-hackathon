@@ -30,6 +30,19 @@ public class PlayerService {
         return command;
     }
 
+    public static Command getGreedyCommand() {
+        Greedy greedy = new Greedy();
+        Cell nextMove = greedy.start();
+        Cell playerCell = CellService.getPlayerCell();
+        Command command = Command.NONE;
+        if (nextMove != null) {
+            command = Command.getCommand(playerCell, nextMove);
+        }
+
+        System.out.println("command = " + command);
+        return command;
+    }
+
     public static Command getNegamaxCommand() {
         Negamax negamax = new Negamax();
         Cell nextMove = negamax.startNegamax();
