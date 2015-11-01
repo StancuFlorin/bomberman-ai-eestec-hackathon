@@ -23,7 +23,7 @@ public class PathFinder {
 
     private PathFinder() {};
 
-    public PathFinder getInstance() {
+    public static PathFinder getInstance() {
         if (instance == null) {
             instance = new PathFinder();
         }

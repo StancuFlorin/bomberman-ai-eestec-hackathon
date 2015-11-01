@@ -18,6 +18,16 @@ public class PlayerService {
         return moves.get(index);
     }
 
+    public static Command getPlayerCommand() {
+        PathFinder pathFinder = PathFinder.getInstance();
+        pathFinder.prepareSearch(Information.BOARD, Information.PLAYER_I, Information.PLAYER_J);
+
+        Cell currentCell = CellService.getPlayerCell();
+        Cell futureCell = pathFinder.buildPath(currentCell)[0];
+
+        return Command.getCommand(currentCell, futureCell);
+    }
+
     public static List<Command> getFreeMoves() {
         List<Command> moves = new ArrayList<>();
 

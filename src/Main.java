@@ -20,7 +20,7 @@ public class Main {
         while (true) {
             try {
                 protocolService.readHeader();
-                protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getRandomMove(), true);
+                protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getPlayerCommand(), true);
             } catch (IOException e) {
                 e.printStackTrace();
                 break;

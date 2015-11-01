@@ -7,6 +7,10 @@ import java.util.List;
 
 public class CellService {
 
+    public static Cell getPlayerCell() {
+        return Information.BOARD[Information.PLAYER_I][Information.PLAYER_J];
+    }
+
     public static void populateNeighbourCellsWithSafeTimeLeft(List<Cell> cellsWithBombs) {
         for (Cell cell : cellsWithBombs) {
             for (Cell neighbour : getDangerousCells(cell)) {
