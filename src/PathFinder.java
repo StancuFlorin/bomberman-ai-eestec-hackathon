@@ -5,9 +5,6 @@ import java.util.*;
  */
 public class PathFinder {
 
-    //TODO: change this
-    public static boolean placeBomb;
-
     private static PathFinder instance = null;
 
     private PriorityQueue<Cell> openedCells;
@@ -39,7 +36,6 @@ public class PathFinder {
         openedCells.offer(Information.BOARD[Information.PLAYER_I][Information.PLAYER_J]);
         last = Information.BOARD[Information.PLAYER_I][Information.PLAYER_J];
         minTotalCost = Integer.MAX_VALUE;
-        placeBomb = false;
     }
 
     public void updateParams(Cell front, int currX, int currY, int increase) {
@@ -207,7 +203,8 @@ public class PathFinder {
 
         cmds = CellService.isReadyToExplode(currentCell);
         if (cmds.size() == 0) {
-            placeBomb = true;
+            System.out.println("cmds.size() == 0");
+            Information.BOMB = true;
         }
         Cell nextCell = findPath();
         if (nextCell != null) {

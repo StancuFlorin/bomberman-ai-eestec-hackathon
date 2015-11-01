@@ -20,4 +20,6 @@ public class Information {
     public static int PLAYER_J;
 
     public static List<Cell> almostSafeCells = new ArrayList<>();
+
+    public static boolean BOMB = false;
 }

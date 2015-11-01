@@ -32,11 +32,9 @@ public class Main {
 
                 if (STRATEGY == 0) {
                     Command c = PlayerService.getPlayerCommand();
-                    if (PathFinder.placeBomb) {
-                        protocolService.sendMessage(Information.CURRENT_MOVE, c, true);
-                    } else {
-                        protocolService.sendMessage(Information.CURRENT_MOVE, c, false);
-                    }
+                    System.out.println(Information.BOMB);
+                    protocolService.sendMessage(Information.CURRENT_MOVE, c, Information.BOMB);
+                    Information.BOMB = false;
                 } else {
                     protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getGreedyCommand(), true);
                 }
