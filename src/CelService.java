@@ -7,11 +7,15 @@ import java.util.List;
 
 public class CelService {
 
-    public void populateNeighbourCellsWithSafeTimeLeft(List<Cell> cellsWithBombs) {
-
+    public static void populateNeighbourCellsWithSafeTimeLeft(List<Cell> cellsWithBombs) {
+        for (Cell cell : cellsWithBombs) {
+            for (Cell neighbour : getNeighbours(cell)) {
+                neighbour.setSafeTimeLeft(cell.getBombTimeLeft());
+            }
+        }
     }
 
-    public List<Cell> getNeighbours(Cell cell) {
+    public static List<Cell> getNeighbours(Cell cell) {
         List<Cell> neighbours = new ArrayList<>();
         return neighbours;
     }
