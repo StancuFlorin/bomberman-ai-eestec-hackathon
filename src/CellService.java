@@ -5,7 +5,7 @@ import java.util.List;
  * Created by StancuFlorin on 11/1/2015.
  */
 
-public class CelService {
+public class CellService {
 
     public static void populateNeighbourCellsWithSafeTimeLeft(List<Cell> cellsWithBombs) {
         for (Cell cell : cellsWithBombs) {
@@ -13,6 +13,11 @@ public class CelService {
                 neighbour.setSafeTimeLeft(cell.getBombTimeLeft());
             }
         }
+    }
+
+    public static List<Cell> getFreeNeighbours(Cell cell) {
+        List<Cell> neighbours = new ArrayList<>();
+        return neighbours;
     }
 
     public static List<Cell> getDangerousCells(Cell bombCell) {

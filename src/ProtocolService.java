@@ -80,7 +80,7 @@ public class ProtocolService {
         }
 
         DebugService.printBoard();
-        CelService.populateNeighbourCellsWithSafeTimeLeft(cellsWithBombs);
+        CellService.populateNeighbourCellsWithSafeTimeLeft(cellsWithBombs);
     }
 
     private void sendMessage(int move, int command) throws IOException {
