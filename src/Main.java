@@ -21,9 +21,10 @@ public class Main {
         while (true) {
             try {
                 protocolService.readHeader();
-                protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getPlayerCommand(), true);
+                //protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getPlayerCommand(), true);
+                protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getNegamaxCommand(), Negamax.addBomb());
             } catch (BufferUnderflowException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 break;
             }
         }

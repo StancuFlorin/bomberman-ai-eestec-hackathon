@@ -12,8 +12,10 @@ public class CellService {
     }
 
     public static void populateNeighbourCellsWithSafeTimeLeft(List<Cell> cellsWithBombs) {
+        Information.almostSafeCells = new ArrayList<>();
         for (Cell cell : cellsWithBombs) {
-            for (Cell neighbour : getDangerousCells(cell)) {
+            for (Cell neighbour : getNeighboursFromBombArea(cell)) {
+                Information.almostSafeCells.add(neighbour);
                 neighbour.setSafeTimeLeft(cell.getBombTimeLeft());
             }
         }
@@ -22,23 +24,29 @@ public class CellService {
     public static List<Cell> getFreeNeighbours(Cell cell) {
         List<Cell> neighbours = new ArrayList<>();
 
-        int x = cell.getX();
-        int y = cell.getY();
+        int i = cell.getX();
+        int j = cell.getY();
 
-        for(int i = -1; i < 2; i++) {
-            for(int j = -1; j < 2; j++) {
-                if(i != 0 && j != 0) {
-                    if(isOnBoard(x+i, y+i) && Information.BOARD[x+i][y+j].isFree()) {
-                        neighbours.add(Information.BOARD[x+i][y+i]);
-                    }
-                }
-            }
+        if (isOnBoard(i, j - 1) && Information.BOARD[i][j - 1].isFree()) {
+            neighbours.add(Information.BOARD[i][j-1]);
+        }
+
+        if (isOnBoard(i, j + 1) && Information.BOARD[i][j + 1].isFree()) {
+            neighbours.add(Information.BOARD[i][j + 1]);
+        }
+
+        if (isOnBoard(i - 1, j) && Information.BOARD[i - 1][j].isFree()) {
+            neighbours.add(Information.BOARD[i - 1][j]);
+        }
+
+        if (isOnBoard(i + 1, j) && Information.BOARD[i + 1][j].isFree()) {
+            neighbours.add(Information.BOARD[i + 1][j]);
         }
 
         return neighbours;
     }
 
-    public static List<Cell> getDangerousCells(Cell bombCell) {
+    public static List<Cell> getNeighboursFromBombArea(Cell bombCell) {
         List<Cell> neighbours = new ArrayList<>();
 
         int x = bombCell.getX();

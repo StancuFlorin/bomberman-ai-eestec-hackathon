@@ -25,9 +25,18 @@ public class PlayerService {
         Cell currentCell = CellService.getPlayerCell();
         Cell futureCell = pathFinder.findPath();
 
-        System.out.println("after findPath()");
         Command command = Command.getCommand(currentCell, futureCell);
         System.out.println("Command = " + command);
+        return command;
+    }
+
+    public static Command getNegamaxCommand() {
+        Negamax negamax = new Negamax();
+        Cell nextMove = negamax.startNegamax();
+        Cell playerCell = CellService.getPlayerCell();
+
+        Command command = Command.getCommand(playerCell, nextMove);
+        System.out.println("command = " + command);
         return command;
     }
 

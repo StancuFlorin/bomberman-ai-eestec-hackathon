@@ -67,7 +67,7 @@ public class PathFinder {
             }
 
             if (prevG == 0) {
-                System.out.println("offer = " + currX + " - " + currY);
+                //System.out.println("offer = " + currX + " - " + currY);
                 openedCells.offer(Information.BOARD[currX][currY]);
             }
         }
@@ -119,11 +119,11 @@ public class PathFinder {
                 }
             }
 
-            System.out.println("nbOfMoves = " + nbOfMoves);
+            //System.out.println("nbOfMoves = " + nbOfMoves);
             nbOfMoves--;
         }
 
-        System.out.println("last at the end: " + last.getX() + " " + last.getY());
+        //System.out.println("last at the end: " + last.getX() + " " + last.getY());
 
         return nextCell();
     }
@@ -140,7 +140,7 @@ public class PathFinder {
         }
 
         while (curr.getParent() != null) {
-            System.out.println(curr.getX() + " " + curr.getY());
+            //System.out.println(curr.getX() + " " + curr.getY());
             if (curr.getParent().getParent().getParent() == null) {
                 return curr.getParent();
             }

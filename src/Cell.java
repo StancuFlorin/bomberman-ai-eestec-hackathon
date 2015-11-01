@@ -172,7 +172,11 @@ public class Cell implements Comparable<Cell> {
     }
 
     public void setSafeTimeLeft(int safeTimeLeft) {
-        this.safeTimeLeft = Math.min(this.safeTimeLeft, safeTimeLeft);
+        if (this.safeTimeLeft == 0) {
+            this.safeTimeLeft = safeTimeLeft;
+        } else {
+            this.safeTimeLeft = Math.min(this.safeTimeLeft, safeTimeLeft);
+        }
     }
 
     public int getArrivalCost() {
@@ -240,4 +244,52 @@ public class Cell implements Comparable<Cell> {
             return 0;
         }
     }
+
+    private int changedSafeTimeLeft = 0;
+    private int changedFlameTimeLeft = 0;
+    private int changedBombTimeLeft = 0;
+
+    public void nextState() {
+        if (this.flameTimeLeft > 0) {
+            this.flameTimeLeft--;
+            this.changedFlameTimeLeft++;
+        }
+
+        if (this.safeTimeLeft > 0) {
+            this.safeTimeLeft--;
+            if (this.safeTimeLeft == 0) {
+                this.flameTimeLeft = 4;
+            }
+            this.changedSafeTimeLeft++;
+        } else if (this.flameTimeLeft > 0) {
+            this.flameTimeLeft--;
+            this.changedFlameTimeLeft++;
+        }
+    }
+
+    public void previousState() {
+        if (this.changedFlameTimeLeft > 0) {
+            this.flameTimeLeft++;
+            this.changedFlameTimeLeft--;
+        }
+
+        if (changedSafeTimeLeft > 0) {
+            if (this.safeTimeLeft == 0) {
+                this.flameTimeLeft = 0;
+            }
+            this.safeTimeLeft++;
+            this.changedSafeTimeLeft--;
+        } else if (changedFlameTimeLeft > 0) {
+            this.flameTimeLeft++;
+            this.changedFlameTimeLeft--;
+        }
+    }
+
+    @Override
+    public String toString() {
+        Cell playerCell = CellService.getPlayerCell();
+        Command command = Command.getCommand(playerCell, this);
+        return command.toString();
+    }
+
 }
