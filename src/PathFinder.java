@@ -101,28 +101,28 @@ public class PathFinder {
             if (!closedCells.contains(board[currX][prevY])) {
                 // check the cell again for obstacles
                 if (board[currX][prevY].isFree()) {
-                    System.out.println("checked for availability " + currX + ", " + prevY);
+                    //System.out.println("checked for availability " + currX + ", " + prevY);
                     updateParams(front, currX, currY);
                 }
             }
 
             if (!closedCells.contains(board[currX][nextY])) {
                 if (board[currX][nextY].isFree()) {
-                    System.out.println("checked for availability " + currX + ", " + nextY);
+                    //System.out.println("checked for availability " + currX + ", " + nextY);
                     updateParams(front, currX, nextY);
                 }
             }
 
             if (!closedCells.contains(board[prevX][currY])) {
                 if (board[prevX][currY].isFree()) {
-                    System.out.println("checked for availability " + prevX + ", " + currY);
+                    //System.out.println("checked for availability " + prevX + ", " + currY);
                     updateParams(front, prevX, currY);
                 }
             }
 
             if (!closedCells.contains(board[nextX][currY])) {
                 if (board[nextX][currY].isFree()) {
-                    System.out.println("checked for availability " + nextX + ", " + currY);
+                    //System.out.println("checked for availability " + nextX + ", " + currY);
                     updateParams(front, nextX, currY);
                 }
             }
