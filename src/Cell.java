@@ -35,6 +35,18 @@ public class Cell {
 
     private int safeTimeLeft;
 
+    private int arrivalCost;
+
+    private int heuristicCost;
+
+    private int totalCost;
+
+    private Cell parent;
+
+    private int prevSteps;
+
+    public static final int MAX_CELL_SEARCH = 5;
+
     /**
      * Daca in celula curenta nu se afla o bomba / flacari / zid.
      * Daca nu exista niciun player in celula curenta.
@@ -54,6 +66,9 @@ public class Cell {
 
         this.x = x;
         this.y = y;
+
+        heuristicCost = Cell.MAX_CELL_SEARCH;
+        totalCost = Integer.MAX_VALUE;
     }
 
     public boolean isMyLocation() {
@@ -158,5 +173,49 @@ public class Cell {
 
     public void setSafeTimeLeft(int safeTimeLeft) {
         this.safeTimeLeft = Math.min(this.safeTimeLeft, safeTimeLeft);
+    }
+
+    public int getArrivalCost() {
+        return arrivalCost;
+    }
+
+    public void setArrivalCost(int arrivalCost) {
+        this.arrivalCost = arrivalCost;
+    }
+
+    public int getHeuristicCost() {
+        return heuristicCost;
+    }
+
+    public void setHeuristicCost(int heuristicCost) {
+        this.heuristicCost = heuristicCost;
+    }
+
+    public int getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(int totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public int getDangerLevel() {
+        return (10 - safeTimeLeft);
+    }
+
+    public Cell getParent() {
+        return parent;
+    }
+
+    public void setParent(Cell parent) {
+        this.parent = parent;
+    }
+
+    public int getPrevSteps() {
+        return prevSteps;
+    }
+
+    public void setPrevSteps(int prevSteps) {
+        this.prevSteps = prevSteps;
     }
 }
