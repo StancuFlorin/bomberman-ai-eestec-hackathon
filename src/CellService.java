@@ -74,4 +74,33 @@ public class CellService {
     public static boolean isOnBoard(int x, int y) {
         return x >= 0 && y >= 0 && x < Information.BOARD_N && y < Information.BOARD_M;
     }
+
+    public static boolean isReadyToExplode(Cell cell) {
+        int cX = cell.getX();
+        int cY = cell.getY();
+
+        boolean flag = false;
+        if (isOnBoard(cX, cY - 1)) {
+            if (Information.BOARD[cX][cY - 1].getBombTimeLeft() <= 2) {
+                flag = true;
+            }
+        }
+
+        if (isOnBoard(cX, cY + 1)) {
+            if (Information.BOARD[cX][cY + 1].getBombTimeLeft() <= 2) {
+                flag = true;
+            }
+        }
+
+        if (isOnBoard(cX - 1, cY)) {
+            if (Information.BOARD[cX - 1][cY].getBombTimeLeft() <= 2) {
+                flag = true;
+            }
+        }
+        if (isOnBoard(cX + 1, cY)) {
+            if (Information.BOARD[cX + 1][cY].getBombTimeLeft() <= 2) {
+                flag = true;
+            }
+        }
+    }
 }

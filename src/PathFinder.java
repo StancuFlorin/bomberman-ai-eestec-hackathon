@@ -171,7 +171,10 @@ public class PathFinder {
         CellService.populateNeighbourCellsWithSafeTimeLeft(Arrays.asList(currentCell));
         Cell nextCell = findPath();
         if (nextCell != null) {
-            placeBomb = true;
+            // check sth to be checked
+            if (!CellService.isReadyToExplode(currentCell)) {
+                placeBomb = true;
+            }
             return nextCell;
         } else {
             for (int i = 0; i < Information.BOARD_N; i++) {
