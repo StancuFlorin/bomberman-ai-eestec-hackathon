@@ -41,9 +41,13 @@ public class Main {
                         Information.BOMB = false;
                     } else {
                         protocolService.sendMessage(Information.CURRENT_MOVE, c, false);
+                        Information.BOMB = false;
                     }
-                } else {
+                } else if (STRATEGY == 1) {
                     protocolService.sendMessage(Information.CURRENT_MOVE, PlayerService.getGreedyCommand(), true);
+                } else {
+                    Command c = PlayerService.getPlayerCommand();
+                    protocolService.sendMessage(Information.CURRENT_MOVE, c, false);
                 }
             } catch (BufferUnderflowException e) {
                 //e.printStackTrace();
