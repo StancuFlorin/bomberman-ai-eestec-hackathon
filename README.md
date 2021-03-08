@@ -1,6 +1,6 @@
 # eeStec Olympics 6 Hackathon
 
-They said we had a [pretty good defence](https://www.facebook.com/stancu.florin23/videos/1049374015095052) for second place.
+The client developed in 24h on eeStec Olympics 6 Hackathon in 2015. They said we had a [pretty good defence](https://www.facebook.com/stancu.florin23/videos/1049374015095052) for second place.
 
 
 ## Event Description
