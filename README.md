@@ -2,11 +2,10 @@
 
 Second place at eeStec Olympics 6 Hackathon.
 
+> Ești student la o facultate cu profil tehnic în București și pasiunea ta e programarea? Îți place să lucrezi în echipă și ești în căutare de provocări în domeniul IT?
+
+> Toamna aceasta EESTEC LC Bucharest organizează evenimentul perfect pentru tine eeStec Olympics 6 – cea de-a 6-a ediție a concursului de programare desfășurat în 24 de ore.
 ```
-Ești student la o facultate cu profil tehnic în București și pasiunea ta e programarea? Îți place să lucrezi în echipă și ești în căutare de provocări în domeniul IT?
-
-Toamna aceasta EESTEC LC Bucharest organizează evenimentul perfect pentru tine eeStec Olympics 6 – cea de-a 6-a ediție a concursului de programare desfășurat în 24 de ore.
-
 În cadrul acestui eveniment ai ocazia să îți pui în practică cunoștințele pentru a rezolva probleme legate de programare, prin implementarea algoritmilor și dezvoltarea unei aplicații într-un timp cât mai scurt.
 
 Evenimentul se desfășoară în perioada 30-31 Octombrie, în holul AN al Rectoratului Universității Politehnica din București.
