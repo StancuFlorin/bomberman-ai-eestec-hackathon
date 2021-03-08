@@ -2,6 +2,7 @@
 
 Second place at eeStec Olympics 6 Hackathon.
 
+![](./video.svg)
 
 ## Event Description
 
