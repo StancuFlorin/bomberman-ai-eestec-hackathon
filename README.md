@@ -1,8 +1,7 @@
 # eeStec Olympics 6 Hackathon
 
-Second place at eeStec Olympics 6 Hackathon.
+They said we had a [https://www.facebook.com/stancu.florin23/videos/1049374015095052](pretty good defence) for second place.
 
-![](video.svg)
 
 ## Event Description
 
